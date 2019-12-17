@@ -1,0 +1,110 @@
+$curl -LO https://storage.googleapis.com/kubernetes-release/release/`curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt`/bin/linux/amd64/kubectl
+
+$chmod 700 kubectl
+
+$wget https://github.com/kubernetes/kops/releases/download/1.12.3/kops-linux-amd64
+
+$chmod 700 kops-linux-amd64
+
+
+$echo $PATH
+
+$mv kubectl /usr/local/sbin/kubectl
+
+$mv kops-linux-amd64 /usr/local/sbin/kops
+
+$aws configure
+
+$ssh-keygen -f k8skey
+
+$kops create cluster --name=nbharath.ml --state=s3://nbharath.ml --zones=us-east-1a --node-count=2 --node-size=t2.micro --dns-zone=nbharath.ml
+
+$kops update cluster nbharath.ml --yes --state=s3://nbharath.ml
+
+ nano myworld.yml
+
+apiVersion: v1
+kind: pod
+metadata:
+  name: bharathnginxpod
+  labels:
+    app: bharathnginxpod
+spec:
+  containers:
+  - name: k8s-demo
+    image: sreeharshav/rollingupdate:v2
+    ports:
+    - name: nginx-port
+      containerport: 80
+
+kubectl create -f myworld.yml
+
+kubectl describe service mynginx
+
+{ll -al
+cat .kube/config
+
+delete:
+
+$kops delete cluster --name nbharath.ml --state=s3://nbharath.ml --yes
+
+cmds:
+=======
+$kubectl get nodes
+$kubectl get pods
+$kubectl run nginx1  --image=nginx --port=80 --replicas=3
+$kubectl get deployment
+$kubectl get pods -o wide
+$kubectl exec nginx1-id ls
+$kubectl get deployment --all-namespaces
+$kubectl label pod nginx-id env=prod
+$kubectl get pods --show-labels
+$kubectl get pods -l env=prod
+$kubectl delete pods podids
+$kubectl get rs 
+$kubectl delete deployment nginx (delete deployment)
+
+custer expand:
+==============
+$kops edit ig --name omicmd.xyz --state=s3://kuberneteslab nodes
+$kops update cluster omicmd.xyz --yes --state=s3://kuberneteslab
+[$alias kube=kubectl]
+$kube create -f pod.yml
+$kube get pods
+$ kube get pod -o wide
+$kubectl discribe pod nginxpod2
+$kubectl delete pod nginxpod nginxpod2
+$kubectl create -f deploy.yml
+$kubectl get deployment
+$kubectl get rs 
+$kubectl expose pod deploy-nginx-id --type=NodePort --name nginx100-sevice service/nginx100-service exposed
+$kubectl get svc 
+$kubectl get pods,deploy,svc,nodes
+$kubectl delete service servicename
+$kubectl | head
+$which kubectl
+$kubectl create -f daemonset.yaml
+$kubectl get po -o wide
+$kubectl describe ds fluentd-elasticsearch
+$kubectl delete ds fluentd-elasticsearch
+
+
+$kubectl get pods --all-namespaces -o wide-
+
+
+
+$kops create cluster --name=nbharath.ml --state=s3://nbharath.ml --zones=ap-south-1a --node-count=1 --node-size=t2.micro --dns-zone=nbharath.ml --dns private
+
+
+$ssh -i ~/.ssh/id_rsa admin@api.nbharath.ml
+
+
+
+
+
+
+
+
+
+
+
